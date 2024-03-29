@@ -6,7 +6,7 @@ import java.io.ObjectOutput;
 import java.text.ParseException;
 import java.util.ArrayList;
 
-abstract class TrackContainer implements Externalizable {
+public abstract class TrackContainer implements Externalizable {
     protected ArrayList<Track> tracks;
 
     public TrackContainer() {
