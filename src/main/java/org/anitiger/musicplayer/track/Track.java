@@ -1,9 +1,6 @@
 package org.anitiger.musicplayer.track;
 
-import java.io.Externalizable;
-import java.io.ObjectInput;
-import java.io.ObjectOutput;
-import java.io.Serial;
+import java.io.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -40,7 +37,7 @@ public class Track implements Externalizable {
 
     public Track(String trackTitle, String trackAuthors, long trackDuration, String genre, String trackReleaseAlbum, String trackReleaseDate) throws ParseException {
         if (trackTitle.isEmpty() || trackAuthors.isEmpty() || trackDuration == 0 || trackReleaseDate.isEmpty() || genre.isEmpty()) {
-            throw new IllegalArgumentException("Track title, track authors, track duration and track release date must not be empty.");
+            throw new IllegalArgumentException("Track title, track authors, track duration, track release date and genre must not be empty.");
         }
         this.trackId = globalTrackId++;
         this.trackTitle = trackTitle;
@@ -121,8 +118,8 @@ public class Track implements Externalizable {
         this.trackTitle = in.readUTF();
         this.trackAuthors = in.readUTF();
         long durationBuffer = in.readLong();
-        if (durationBuffer < 0) {
-            throw new RuntimeException("Track duration is negative");
+        if (durationBuffer <= 0) {
+            throw new InvalidObjectException("Track duration is negative or zero");
         }
         this.trackDuration = durationBuffer;
         this.genre = in.readUTF();
@@ -131,7 +128,7 @@ public class Track implements Externalizable {
             this.trackReleaseDate = sdfForReleaseDate.parse(in.readUTF());
             this.trackAddedAt = sdfForAddedAt.parse(in.readUTF());
         } catch (ParseException e) {
-            throw new RuntimeException(e);
+            throw new InvalidObjectException("Parse error" + e.getMessage() + e.getStackTrace()[0]);
         }
     }
 }
