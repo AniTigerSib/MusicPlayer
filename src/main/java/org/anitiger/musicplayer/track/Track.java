@@ -23,7 +23,7 @@ public class Track implements Externalizable {
     private Date trackReleaseDate;
     private Date trackAddedAt;
 
-    public Track() throws ParseException {
+    public Track() {
         trackId = globalTrackId++;
         trackTitle = "";
         trackAuthors = "";
@@ -31,7 +31,11 @@ public class Track implements Externalizable {
         genre = "";
         trackReleaseAlbum = "";
         trackReleaseDate = null;
-        trackAddedAt = sdfForAddedAt.parse(sdfForAddedAt.format(new Date()));
+        try {
+            trackAddedAt = sdfForAddedAt.parse(sdfForAddedAt.format(new Date()));
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public Track(String trackTitle, String trackAuthors, long trackDuration, String genre, String trackReleaseAlbum, String trackReleaseDate) throws ParseException {
@@ -81,17 +85,17 @@ public class Track implements Externalizable {
     }
     public void print() {
         System.out.println("Title: " + this.trackTitle);
-        System.out.println("ID: " + this.trackId);
-        System.out.println("Authors: " + this.trackAuthors);
-        System.out.println("Duration: " + this.trackDuration);
-        System.out.println("Genre: " + this.genre);
+        System.out.println("\tAuthors: " + this.trackAuthors);
+        System.out.println("\tID: " + this.trackId);
+        System.out.println("\tDuration: " + this.trackDuration);
+        System.out.println("\tGenre: " + this.genre);
         if (this.trackReleaseAlbum.isEmpty()) {
-            System.out.println("Single release");
+            System.out.println("\tSingle release");
         } else {
-            System.out.println("Release album: " + this.trackReleaseAlbum);
+            System.out.println("\tRelease album: " + this.trackReleaseAlbum);
         }
-        System.out.println("Release date: " + sdfForReleaseDate.format(this.trackReleaseDate));
-        System.out.println("Track was added: " + sdfForAddedAt.format(this.trackAddedAt));
+        System.out.println("\tRelease date: " + sdfForReleaseDate.format(this.trackReleaseDate));
+        System.out.println("\tTrack was added: " + sdfForAddedAt.format(this.trackAddedAt));
     }
 
     @Override
