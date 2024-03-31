@@ -3,18 +3,19 @@ package org.anitiger.musicplayer.track;
 import java.io.Externalizable;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
+import java.io.Serial;
 import java.text.ParseException;
 import java.util.ArrayList;
 
 public abstract class TrackContainer implements Externalizable {
+    @Serial
+    private static final long serialVersionUID = 1L;
     protected ArrayList<Track> tracks;
 
     public TrackContainer() {
         tracks = new ArrayList<>();
     }
-    public void addTrack(Track track) {
-        tracks.add(track);
-    }
+    public abstract void addTrack(Track track) throws ParseException;
     public Track getTrackById(long id) {
         for (Track track : tracks) {
             if (track.getTrackId() == id) {

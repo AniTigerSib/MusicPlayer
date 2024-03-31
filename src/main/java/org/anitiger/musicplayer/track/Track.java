@@ -13,25 +13,25 @@ public class Track implements Externalizable {
     private static final long serialVersionUID = 1L;
     private static final SimpleDateFormat sdfForReleaseDate = new SimpleDateFormat("yyyy-MM-dd");
     private static final SimpleDateFormat sdfForAddedAt = new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss");
-    private static long globalTrackId;
+    private static long globalTrackId = 0;
     private long trackId;
     private String trackTitle;
     private String trackAuthors;
-    private long trackDuration;
+    private long trackDuration; // in seconds
     private String genre;
     private String trackReleaseAlbum;
     private Date trackReleaseDate;
     private Date trackAddedAt;
 
     public Track() throws ParseException {
-        this.trackId = globalTrackId++;
-        this.trackTitle = "";
-        this.trackAuthors = "";
-        this.trackDuration = 0;
-        this.genre = "";
-        this.trackReleaseAlbum = "";
-        this.trackReleaseDate = sdfForReleaseDate.get2DigitYearStart();
-        this.trackAddedAt = sdfForAddedAt.parse(sdfForAddedAt.format(new Date()));
+        trackId = globalTrackId++;
+        trackTitle = "";
+        trackAuthors = "";
+        trackDuration = 0;
+        genre = "";
+        trackReleaseAlbum = "";
+        trackReleaseDate = sdfForReleaseDate.get2DigitYearStart();
+        trackAddedAt = sdfForAddedAt.parse(sdfForAddedAt.format(new Date()));
     }
 
     public Track(String trackTitle, String trackAuthors, long trackDuration, String genre, String trackReleaseAlbum, String trackReleaseDate, String trackAddedAt) throws ParseException {
