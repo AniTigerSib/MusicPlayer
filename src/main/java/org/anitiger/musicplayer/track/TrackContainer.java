@@ -32,6 +32,17 @@ public abstract class TrackContainer implements Externalizable {
         }
         return null;
     }
+    public void printTrackById(long id) {
+        getTrackById(id).print();
+    }
+    public void printTrackByTitle(String title) {
+        getTrackByTitle(title).print();
+    }
+    public void printAll() {
+        for (int i = 0; i < tracks.size(); i++) {
+            System.out.println((i + 1) + ". " + tracks.get(i).getTrackTitle());
+        }
+    }
     public Track removeTrackById(long id) {
         Track trackToRemove = getTrackById(id);
         tracks.remove(trackToRemove);
@@ -51,6 +62,7 @@ public abstract class TrackContainer implements Externalizable {
     public void clear() {
         tracks.clear();
     }
+
 
     @Override
     public void writeExternal(ObjectOutput out) throws java.io.IOException {

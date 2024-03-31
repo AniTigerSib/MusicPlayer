@@ -30,11 +30,14 @@ public class Track implements Externalizable {
         trackDuration = 0;
         genre = "";
         trackReleaseAlbum = "";
-        trackReleaseDate = sdfForReleaseDate.get2DigitYearStart();
+        trackReleaseDate = null;
         trackAddedAt = sdfForAddedAt.parse(sdfForAddedAt.format(new Date()));
     }
 
-    public Track(String trackTitle, String trackAuthors, long trackDuration, String genre, String trackReleaseAlbum, String trackReleaseDate, String trackAddedAt) throws ParseException {
+    public Track(String trackTitle, String trackAuthors, long trackDuration, String genre, String trackReleaseAlbum, String trackReleaseDate) throws ParseException {
+        if (trackTitle.isEmpty() || trackAuthors.isEmpty() || trackDuration == 0 || trackReleaseDate.isEmpty() || genre.isEmpty()) {
+            throw new IllegalArgumentException("Track title, track authors, track duration and track release date must not be empty.");
+        }
         this.trackId = globalTrackId++;
         this.trackTitle = trackTitle;
         this.trackAuthors = trackAuthors;
@@ -75,6 +78,20 @@ public class Track implements Externalizable {
 
     public Date getTrackAddedAt() {
         return this.trackAddedAt;
+    }
+    public void print() {
+        System.out.println("Title: " + this.trackTitle);
+        System.out.println("ID: " + this.trackId);
+        System.out.println("Authors: " + this.trackAuthors);
+        System.out.println("Duration: " + this.trackDuration);
+        System.out.println("Genre: " + this.genre);
+        if (this.trackReleaseAlbum.isEmpty()) {
+            System.out.println("Single release");
+        } else {
+            System.out.println("Release album: " + this.trackReleaseAlbum);
+        }
+        System.out.println("Release date: " + sdfForReleaseDate.format(this.trackReleaseDate));
+        System.out.println("Track was added: " + sdfForAddedAt.format(this.trackAddedAt));
     }
 
     @Override
