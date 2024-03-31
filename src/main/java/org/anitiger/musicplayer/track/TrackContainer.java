@@ -38,6 +38,9 @@ public abstract class TrackContainer implements Externalizable {
     public void printTrackByTitle(String title) {
         getTrackByTitle(title).print();
     }
+    public void printByNumber(int number) {
+        tracks.get(number).print();
+    }
     public void printAll() {
         for (int i = 0; i < tracks.size(); i++) {
             System.out.println((i + 1) + ". " + tracks.get(i).getTrackTitle());
@@ -73,15 +76,10 @@ public abstract class TrackContainer implements Externalizable {
     }
 
     @Override
-    public void readExternal(ObjectInput in) throws java.io.IOException {
+    public void readExternal(ObjectInput in) throws java.io.IOException, ClassNotFoundException {
         int size = in.readInt();
         for (int i = 0; i < size; i++) {
-            Track track;
-            try {
-                track = new Track();
-            } catch (ParseException e) {
-                throw new RuntimeException(e);
-            }
+            Track track = new Track();
             track.readExternal(in);
             tracks.add(track);
         }
