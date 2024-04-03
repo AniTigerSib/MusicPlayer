@@ -110,10 +110,11 @@ public class Track implements Externalizable {
     @Override
     public void readExternal(ObjectInput in) throws java.io.IOException {
         long idBuffer = in.readLong();
-        if (idBuffer <  globalTrackId) {
+        if (idBuffer <= globalTrackId) {
             this.trackId = globalTrackId++;
         } else {
             this.trackId = idBuffer;
+            globalTrackId = ++idBuffer;
         }
         this.trackTitle = in.readUTF();
         this.trackAuthors = in.readUTF();
