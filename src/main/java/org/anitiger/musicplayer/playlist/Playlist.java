@@ -53,12 +53,13 @@ public class Playlist extends TrackContainer {
         this.isSaved = true;
     }
     @Override
-    public void readExternal(ObjectInput in) throws java.io.IOException, ClassNotFoundException {
+    public void readExternal(ObjectInput in) throws java.io.IOException {
         long idBuffer = in.readLong();
-        if (idBuffer <  globalPlaylistId) {
+        if (idBuffer <= globalPlaylistId) {
             this.playlistId = globalPlaylistId++;
         } else {
             this.playlistId = idBuffer;
+            globalPlaylistId = ++idBuffer;
         }
         playlistTitle = in.readUTF();
         try {
