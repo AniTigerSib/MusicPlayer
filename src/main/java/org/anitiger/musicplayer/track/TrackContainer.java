@@ -76,7 +76,7 @@ public abstract class TrackContainer implements Externalizable {
     }
 
     @Override
-    public void readExternal(ObjectInput in) throws java.io.IOException, ClassNotFoundException {
+    public void readExternal(ObjectInput in) throws java.io.IOException {
         int size = in.readInt();
         for (int i = 0; i < size; i++) {
             Track track = new Track();
